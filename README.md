@@ -30,7 +30,7 @@ The `gradio-hf-space` skill (`SKILL.md`) is an expert guide covering:
 | **Quick-start pattern** | Minimal `app.py` skeleton for Gradio 6.9.0 Spaces |
 | **Responsive layouts** | 9:16 (mobile) and 16:9 (desktop) unified CSS grid layouts |
 | **Touchscreen UX** | Tap, swipe, scroll — WCAG-compliant touch-friendly ML UIs |
-| **Custom components** | Building Svelte 5 components with BunJS + Shadcn-Svelte |
+| **Custom components** | Building React components with BunJS + Shadcn |
 | **Async model loading** | Non-blocking lazy model initialisation patterns |
 | **Zero GPU decorator** | `@spaces.GPU` usage, multi-model Spaces, GPU memory management |
 | **HF Spaces limits** | Hard limits, model count guidance, memory optimisation tips |
@@ -130,7 +130,7 @@ Copilot will automatically apply this skill when you mention any of:
 | Workflow | Description |
 |---|---|
 | **Build a new Space** | Scaffold a complete Gradio app with responsive layout and async model loading |
-| **Add a custom component** | Create a BunJS + Shadcn Svelte component and wire it into a Space |
+| **Add a custom component** | Create a BunJS + Shadcn React component and wire it into a Space |
 | **Optimise for Zero GPU** | Apply `@spaces.GPU`, lazy loading, and memory management patterns |
 | **Make a Space mobile-friendly** | Add CSS breakpoints and touch-optimised UX |
 
