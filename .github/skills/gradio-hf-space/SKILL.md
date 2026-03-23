@@ -179,8 +179,8 @@ with gr.Row():
 ## 4. Custom components — BunJS + Shadcn
 
 Gradio 6.9.0 ships a first-class custom component system. The frontend is authored in
-**Svelte 5** (bundled by Gradio's own toolchain, which uses **Bun** as the package
-manager) and you can freely import Shadcn-Svelte (the official Svelte port of Shadcn/UI)
+**React** (bundled by Gradio's own toolchain, which uses **Bun** as the package
+manager) and you can freely import Shadcn (the official React implementation of Shadcn/UI)
 plus any Shadcn third-party extension.
 
 > **Full reference:** `references/gradio-6.9-custom-components.md`
@@ -194,10 +194,10 @@ gradio cc create MySlider --template slider
 # The scaffold produces:
 # my_slider/
 # ├── backend/my_slider/     ← Python component class
-# ├── frontend/              ← Svelte + Bun workspace
+# ├── frontend/              ← React + Bun workspace
 # │   ├── package.json       ← Bun project (uses bun.lockb)
 # │   ├── src/
-# │   │   ├── Index.svelte   ← exported component
+# │   │   ├── Index.tsx      ← exported component
 # │   │   └── lib/           ← sub-components
 # └── demo/app.py            ← live dev demo
 ```
@@ -208,40 +208,47 @@ Or use the bundled scaffold script:
 python .github/skills/gradio-hf-space/scripts/scaffold_custom_component.py \
   --name my-rating \
   --template slider \
-  --shadcn        # installs shadcn-svelte and a starter component
+  --shadcn        # installs Shadcn React dependencies and a starter component
 ```
 
 ### Adding Shadcn to the frontend
 
 ```bash
 cd my_slider/frontend
-bun add shadcn-svelte        # core Shadcn Svelte
-bun add @shadcn-svelte/ui    # pre-built component registry (optional convenience package)
+bunx --bun shadcn@latest init
+bunx --bun shadcn@latest add slider
 ```
 
-In `src/Index.svelte`:
+In `src/Index.tsx`:
 
-```svelte
-<script lang="ts">
-  import { Slider } from "shadcn-svelte";   // Shadcn Svelte slider
-  import type { Gradio } from "@gradio/utils";
+```tsx
+import { Slider } from "@/components/ui/slider";
+import type { Gradio } from "@gradio/utils";
 
-  export let gradio: Gradio<{ change: never }>;
-  export let value: number = 50;
-  export let label: string = "";
+type Props = {
+  gradio: Gradio<{ change: never }>;
+  value?: number;
+  label?: string;
+};
 
-  function dispatch(v: number) {
-    value = v;
+export default function Index({ gradio, value = 50, label = "" }: Props) {
+  function dispatch(v: number[]) {
     gradio.dispatch("change");
   }
-</script>
 
-<label class="text-sm font-medium">{label}</label>
-<Slider
-  bind:value
-  min={0} max={100} step={1}
-  onValueChange={(v) => dispatch(v[0])}
-/>
+  return (
+    <div>
+      <label className="text-sm font-medium">{label}</label>
+      <Slider
+        defaultValue={[value]}
+        min={0}
+        max={100}
+        step={1}
+        onValueChange={dispatch}
+      />
+    </div>
+  );
+}
 ```
 
 ### Third-party Shadcn components
@@ -251,9 +258,9 @@ for ML UIs:
 
 | Package | What it adds |
 |---|---|
-| `shadcn-svelte-extra` | Combobox, multi-select, date-range picker |
-| `@shadcn-svelte/charts` | Recharts-backed bar/line/area charts |
-| `@huntabyte/primitives` | Drawer, Context menu |
+| `shadcn/ui` registry components | Combobox, multi-select, date-range picker |
+| `recharts` | Recharts-backed bar/line/area charts |
+| `@radix-ui/react-*` | Drawer, context menu primitives |
 
 Install and import exactly like core Shadcn components.
 
@@ -274,13 +281,13 @@ gradio cc publish        # push to HuggingFace Hub as a package
 
 ### Layout patterns with custom components
 
-Custom components return Svelte components, which respect Gradio's grid system via
+Custom components return React components, which respect Gradio's grid system via
 `elem_classes`. Use Tailwind utility classes (Gradio includes Tailwind by default) to add
 responsive padding and max-widths inside the component:
 
-```svelte
-<div class="w-full max-w-md mx-auto p-4 sm:p-2">
-  <!-- component body -->
+```tsx
+<div className="w-full max-w-md mx-auto p-4 sm:p-2">
+  {/* component body */}
 </div>
 ```
 
