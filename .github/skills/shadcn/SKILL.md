@@ -240,3 +240,4 @@ npx shadcn@latest view @shadcn/button
 - [rules/base-vs-radix.md](./rules/base-vs-radix.md) — asChild vs render, Select, ToggleGroup, Slider, Accordion
 - [cli.md](./cli.md) — Commands, flags, presets, templates
 - [customization.md](./customization.md) — Theming, CSS variables, extending components
+- [extensions.md](./references/extensions.json) - Additional or specialised components and blocks made from Shadcn. These are installable libraries compatible with Shadcn. 
