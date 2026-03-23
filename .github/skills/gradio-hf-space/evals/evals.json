@@ -1,0 +1,48 @@
+{
+  "skill_name": "gradio-hf-space",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to build a HuggingFace Space that lets users generate images with Stable Diffusion. The app should look good on my phone (portrait) and on my laptop (landscape) without needing two separate layouts. It also needs to use the Zero GPU decorator so I don't have to pay for a dedicated GPU. Walk me through the full app.py with responsive layout, the @spaces.GPU decorator, and lazy model loading.",
+      "expected_output": "A complete Gradio 6.9.0 app.py with: (1) gr.Blocks CSS responsive layout using elem_id + CSS media queries for 9:16/portrait and 16:9/landscape, (2) @spaces.GPU decorator applied to the inference function, (3) lru_cache lazy model loading, (4) demo.queue() call, (5) large size='lg' buttons for touchscreen.",
+      "files": [],
+      "assertions": [
+        "The response includes a @spaces.GPU decorator on the inference function",
+        "The response uses lru_cache or an equivalent lazy loading pattern",
+        "The response includes CSS or gr.Column(min_width=) to handle portrait layout",
+        "The response includes demo.queue()",
+        "The response uses gr.Button with size='lg' or mentions tap-target sizing",
+        "The response references Gradio 6.9.0 or is consistent with Gradio 6.x API"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "How do I create a custom Gradio component using BunJS and Shadcn? I want a star-rating widget that I can use in my Gradio app. Give me the full backend Python class and frontend Svelte code with Shadcn styling.",
+      "expected_output": "Instructions for scaffolding with `gradio cc create`, a Python Component subclass with preprocess/postprocess/api_info methods, and a Svelte frontend file that imports from shadcn-svelte (or bits-ui), plus bun install commands. The Svelte code should include proper gradio.dispatch calls.",
+      "files": [],
+      "assertions": [
+        "The response mentions `gradio cc create` or the scaffold command",
+        "The response includes a Python class inheriting from gr.Component or Component",
+        "The response includes preprocess and postprocess methods",
+        "The response includes Svelte frontend code (Index.svelte or equivalent)",
+        "The response mentions bun install or bun add",
+        "The response imports from shadcn-svelte or bits-ui in the Svelte code",
+        "The response includes gradio.dispatch in the Svelte component"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I'm building a HuggingFace Space that needs to run 3 different models: a text summariser (BART), an image classifier (ViT), and a text-to-image model (SD 1.5). What are the memory limits I need to worry about on Zero GPU free tier? How do I load all three without running out of RAM or GPU memory? Are there any tricks to keep the UI responsive while they load?",
+      "expected_output": "An explanation of Zero GPU limits (~16 GB RAM, shared A100, 60s default timeout), a lazy loading strategy using lru_cache for each model, guidance on torch.float16/bfloat16 and BitsAndBytes quantization for staying within 16 GB, advice on not loading all models to GPU simultaneously, and UI patterns (progress bars, optimistic updates) for keeping the UI responsive during cold-start.",
+      "files": [],
+      "assertions": [
+        "The response mentions RAM limits (16 GB or similar) for the free tier",
+        "The response mentions the @spaces.GPU duration limit (60s default or 180s max)",
+        "The response recommends lru_cache or lazy loading for each model",
+        "The response recommends torch.float16 or bfloat16 to reduce memory",
+        "The response mentions not loading all models to GPU simultaneously",
+        "The response includes a UI feedback pattern (progress bar, status update, or optimistic UI)"
+      ]
+    }
+  ]
+}
